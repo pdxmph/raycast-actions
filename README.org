@@ -1,0 +1,41 @@
+#+title: Raycast Actions
+
+* [[file:flickr-snippet.sh][Make a flickr snippet]]
+
+Works with Safari and Chrome. Invoke it, select an output format, enter some alt text, get a snippet back to your clipboard.
+
+Output formats are =md=, =org=, or =html=
+
+Output looks like this:
+
+#+begin_src
+![Mutoid Man performs in Portland, OR](https://live.staticflickr.com/65535/54510124850_12cef1aed1_b.jpg)
+#+end_src
+
+This is built to work with a custom link type in org-mode:
+
+#+begin_src emacs-lisp
+(org-add-link-type
+ "img" nil
+ (lambda (path desc backend)
+   (when (org-export-derived-backend-p backend 'md)
+     (format "![%s](%s)" desc path))))
+#+end_src
+
+If you don't want to use the =img:= link, remove =img:= on line 54
+
+* [[file:photos-to-imgup.sh][Upload from Apple Photos to flickr or smugmug with imgup]]
+
+This requires the [[https://github.com/pdxmph/imgup-cli][imgup-cli gem]].
+
+Select a single image in Apple Photos then invoke this.
+
+Asks for title, description, and tags then uploads to the target backend and returns a snippet.
+
+* [[file:finder-to-imgup.sh][Upload from Finder to flickr or smugmug with imgup]]
+
+Also requires the [[https://github.com/pdxmph/imgup-cli][imgup-cli gem]].
+
+Select a single image in Finder, then invoke this.
+
+Asks for title, description, and tags then uploads to the target backend and returns a snippet.
